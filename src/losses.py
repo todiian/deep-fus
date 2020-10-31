@@ -2,7 +2,11 @@
 File:     deep-fus/src/losses.py
 Author:   Tommaso Di Ianni (todiian@stanford.edu)
 
+<<<<<<< HEAD
 Copyright 2020 Tommaso Di Ianni
+=======
+Copyright Tommaso Di Ianni 2020
+>>>>>>> d4262e445e964cb51fc6f9e5cbfeb78c8b15c99a
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

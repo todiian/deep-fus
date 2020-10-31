@@ -2,7 +2,11 @@
 File:     deep-fus/src/predict.py
 Author:   Tommaso Di Ianni (todiian@stanford.edu)
 
+<<<<<<< HEAD
 Copyright 2020 Tommaso Di Ianni
+=======
+Copyright Tommaso Di Ianni 2020
+>>>>>>> d4262e445e964cb51fc6f9e5cbfeb78c8b15c99a
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,6 +26,7 @@ import tensorflow as tf
 from utils import *
 from losses import *
 
+<<<<<<< HEAD
 # 125 COMPOUND FRAMES
 model_dir = '../pretrained_models/deepfUS5_125'
 n_img = 125
@@ -38,6 +43,11 @@ n_img = 125
 # model_dir = '../pretrained_models/deepfUS5_13'
 # n_img = 13
 
+=======
+model_dir = '../results/deepfUS5_125'
+n_img = 125
+
+>>>>>>> d4262e445e964cb51fc6f9e5cbfeb78c8b15c99a
 # Load model 
 model = tf.keras.models.load_model(model_dir +'/my_model.h5', custom_objects={'custom_loss': custom_loss, 'ssim': ssim, 'psnr': psnr, 'nmse': nmse})
     
@@ -45,7 +55,11 @@ model = tf.keras.models.load_model(model_dir +'/my_model.h5', custom_objects={'c
 X_train, Y_train = load_dataset('train', n_img)
     
 # Load TEST examples
+<<<<<<< HEAD
 X_test, Y_test = load_dataset('test', n_img)
+=======
+X_test, Y_test = load_dataset('train', n_img)
+>>>>>>> d4262e445e964cb51fc6f9e5cbfeb78c8b15c99a
 
 # Standardize X data
 Xmean = np.mean(X_train)

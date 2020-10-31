@@ -2,7 +2,11 @@
 File:     deep-fus/src/train.py
 Author:   Tommaso Di Ianni (todiian@stanford.edu)
 
+<<<<<<< HEAD
 Copyright 2020 Tommaso Di Ianni
+=======
+Copyright Tommaso Di Ianni 2020
+>>>>>>> d4262e445e964cb51fc6f9e5cbfeb78c8b15c99a
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -55,6 +59,7 @@ def train(res_dir, n_img=125, learn_rate=5e-6, loss_func='custom', reg_fact=0.5,
     train_log["epochs"] = train_epochs
     train_log["reg_fact"] = reg_fact
     
+<<<<<<< HEAD
     # Create results Directory if doesn't exist
     if not os.path.exists(res_dir):
         os.mkdir(res_dir)
@@ -62,6 +67,8 @@ def train(res_dir, n_img=125, learn_rate=5e-6, loss_func='custom', reg_fact=0.5,
     else:    
         print("Directory " , res_dir ,  " already existing")
         
+=======
+>>>>>>> d4262e445e964cb51fc6f9e5cbfeb78c8b15c99a
     ##########
     # DATASETS
     ##########
@@ -79,6 +86,16 @@ def train(res_dir, n_img=125, learn_rate=5e-6, loss_func='custom', reg_fact=0.5,
     X_train = (X_train-Xmean) / Xstd
     X_dev = (X_dev-Xmean) / Xstd
 
+<<<<<<< HEAD
+=======
+    # Create results Directory if doesn't exist
+    if not os.path.exists(res_dir):
+        os.mkdir(res_dir)
+        print("Directory " , res_dir ,  " created ")
+    else:    
+        print("Directory " , res_dir ,  " already existing")
+
+>>>>>>> d4262e445e964cb51fc6f9e5cbfeb78c8b15c99a
     ##############
     # CREATE MODEL 
     ##############
@@ -91,7 +108,11 @@ def train(res_dir, n_img=125, learn_rate=5e-6, loss_func='custom', reg_fact=0.5,
     # Adam optimizer
     opt = tf.keras.optimizers.Adam(learning_rate=learn_rate, beta_1=0.9, beta_2=0.999, epsilon=1e-07, amsgrad=False, name='Adam')
 
+<<<<<<< HEAD
     # Define the metrics
+=======
+    # Define the metric
+>>>>>>> d4262e445e964cb51fc6f9e5cbfeb78c8b15c99a
     mtrc = [ssim, psnr, nmse]
     
     # Compile model

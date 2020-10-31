@@ -2,7 +2,11 @@
 File:     deep-fus/src/test_training.py
 Author:   Tommaso Di Ianni (todiian@stanford.edu)
 
+<<<<<<< HEAD
 Copyright 2020 Tommaso Di Ianni
+=======
+Copyright Tommaso Di Ianni 2020
+>>>>>>> d4262e445e964cb51fc6f9e5cbfeb78c8b15c99a
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,6 +26,18 @@ from train import *
 
 N_images = 125
 
+<<<<<<< HEAD
 res_dir = '../results/deepfUS5_' +str(N_images)
     
 train(res_dir, n_img=N_images, learn_rate=5e-6, loss_func='custom', reg_fact=0.5, train_epochs=100)
+=======
+# Make results directory
+main_res_dir = '../results/deepfUS5'
+if not os.path.exists(main_res_dir):
+    os.mkdir(main_res_dir)
+    print("Directory " , main_res_dir ,  " Created ")
+
+res_dir = main_res_dir +'_' +str(N_images)
+    
+train(res_dir, n_img=N_images, learn_rate=5e-6, loss_func='custom', reg_fact=0.5, train_epochs=2)
+>>>>>>> d4262e445e964cb51fc6f9e5cbfeb78c8b15c99a

@@ -1,5 +1,6 @@
 # Deep-fUS: functional ultrasound imaging of the brain using deep learning and sparse data
 
+<<<<<<< HEAD
 <img src="results/rat_brain/image.png" width="1000">
 
 ## Description
@@ -21,6 +22,15 @@ To predict the fUS images in the test set using one of the pre-trained models in
 
 ## Software License
 Copyright 2020 Tommaso Di Ianni
+=======
+## Description
+
+This repository contains the software for reconstruction of power Doppler images from sparse compounded ultrasound datasets. 
+
+## Software License
+
+Copyright Tommaso Di Ianni 2020
+>>>>>>> d4262e445e964cb51fc6f9e5cbfeb78c8b15c99a
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -35,6 +45,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ## Citing this work
+<<<<<<< HEAD
 @article {Di Ianni2020.09.29.319368,
 	author = {Di Ianni, Tommaso and Airan, Raag D.},
 	title = {Deep-fUS: functional ultrasound imaging of the brain using deep learning and sparse data},
@@ -46,4 +57,8 @@ limitations under the License.
 	eprint = {https://www.biorxiv.org/content/early/2020/10/01/2020.09.29.319368.full.pdf},
 	journal = {bioRxiv}
 }
+=======
+
+
+>>>>>>> d4262e445e964cb51fc6f9e5cbfeb78c8b15c99a
 
