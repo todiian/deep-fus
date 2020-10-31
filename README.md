@@ -1,6 +1,4 @@
 # Deep-fUS: functional ultrasound imaging of the brain using deep learning and sparse data
-
-<<<<<<< HEAD
 <img src="results/rat_brain/image.png" width="1000">
 
 ## Description
