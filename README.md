@@ -19,7 +19,7 @@ To predict the fUS images in the test set using one of the pre-trained models in
 
 ## Software License
 
-Copyright 2020 Tommaso Di Ianni 2020
+Copyright 2020 Tommaso Di Ianni
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

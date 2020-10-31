@@ -1,0 +1,1 @@
+Place your training examples in this folder. Each example must be in a .mat file. Remember to include a file "datasets_list.txt" listing all your training examples.
