@@ -17,18 +17,9 @@ To train the model, execute [src/test_training.py](src/test_training.py). The sc
 ### Predicting the test set using a pre-trained model
 To predict the fUS images in the test set using one of the pre-trained models in [pretrained_models](pretrained_models), execute [src/predict.py](src/predict.py). This script assumes that the test examples are in the [datasets/test](datasets/test) folder.
 
-
-## Software License
-Copyright 2020 Tommaso Di Ianni
-=======
-## Description
-
-This repository contains the software for reconstruction of power Doppler images from sparse compounded ultrasound datasets. 
-
 ## Software License
 
-Copyright Tommaso Di Ianni 2020
->>>>>>> d4262e445e964cb51fc6f9e5cbfeb78c8b15c99a
+Copyright 2020 Tommaso Di Ianni 2020
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -43,20 +34,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ## Citing this work
-<<<<<<< HEAD
+
+```
 @article {Di Ianni2020.09.29.319368,
-	author = {Di Ianni, Tommaso and Airan, Raag D.},
-	title = {Deep-fUS: functional ultrasound imaging of the brain using deep learning and sparse data},
-	elocation-id = {2020.09.29.319368},
-	year = {2020},
-	doi = {10.1101/2020.09.29.319368},
-	publisher = {Cold Spring Harbor Laboratory},
-	URL = {https://www.biorxiv.org/content/early/2020/10/01/2020.09.29.319368},
-	eprint = {https://www.biorxiv.org/content/early/2020/10/01/2020.09.29.319368.full.pdf},
-	journal = {bioRxiv}
+author = {Di Ianni, Tommaso and Airan, Raag D.},
+title = {Deep-fUS: functional ultrasound imaging of the brain using deep learning and sparse data},
+elocation-id = {2020.09.29.319368},
+year = {2020},
+doi = {10.1101/2020.09.29.319368},
+publisher = {Cold Spring Harbor Laboratory},
+URL = {https://www.biorxiv.org/content/early/2020/10/01/2020.09.29.319368},
+eprint = {https://www.biorxiv.org/content/early/2020/10/01/2020.09.29.319368.full.pdf},
+journal = {bioRxiv}
 }
-=======
-
-
->>>>>>> d4262e445e964cb51fc6f9e5cbfeb78c8b15c99a
+```
 
