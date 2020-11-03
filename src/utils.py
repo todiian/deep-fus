@@ -45,7 +45,7 @@ def load_dataset(dataset, n_img=64, m='all'):
     n_pix = 96
     
     # Load set list
-    with open('../datasets/' +dataset +'/datasets_list.txt', 'r') as f:
+    with open('../data/' +dataset +'/datasets_list.txt', 'r') as f:
         data_list = f.read().splitlines()
     
     # Number of available examples
@@ -69,7 +69,7 @@ def load_dataset(dataset, n_img=64, m='all'):
     for idx, val in enumerate(data_list):
         
         # Load dataset
-        data_dir = '../datasets/' +dataset +'/' +val
+        data_dir = '../data/' +dataset +'/' +val
         mat_contents = sio.loadmat(data_dir)
         
         set_x[idx] = mat_contents['x'][:,:,:n_img]
