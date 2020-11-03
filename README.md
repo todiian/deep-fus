@@ -1,5 +1,5 @@
 # Deep-fUS: functional ultrasound imaging of the brain using deep learning and sparse data
-<img src="results/rat_brain/image.png" width="1000">
+<img src="rat_brain.png" width="1000">
 
 ## Description
 This repository contains the software for reconstruction of power Doppler images from sparse compound ultrasound datasets.
