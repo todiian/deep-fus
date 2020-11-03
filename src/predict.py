@@ -22,6 +22,10 @@ import tensorflow as tf
 from utils import *
 from losses import *
 
+######################
+# SELECT TRAINED MODEL
+######################
+
 # 125 COMPOUND FRAMES
 model_dir = '../pretrained_models/deepfUS5_125'
 n_img = 125
@@ -38,6 +42,23 @@ n_img = 125
 # model_dir = '../pretrained_models/deepfUS5_13'
 # n_img = 13
 
+###################
+# RESULTS DIRECTORY
+###################
+
+res_dir = '../results/predict_test_' +str(n_img)
+
+# Create results directory if not already existing
+if not os.path.exists(res_dir):
+    os.mkdir(res_dir)
+    print("Directory " , res_dir ,  " created ")
+else:    
+    print("Directory " , res_dir ,  " already existing")
+
+#####################
+# LOAD MODEL AND DATA
+#####################
+
 # Load model 
 model = tf.keras.models.load_model(model_dir +'/my_model.h5', custom_objects={'custom_loss': custom_loss, 'ssim': ssim, 'psnr': psnr, 'nmse': nmse})
     
@@ -53,8 +74,12 @@ Xstd = np.std(X_train)
 
 X_test = (X_test-Xmean) / Xstd
 
-# Predict prop TEST examples
+##################
+# PREDICT AND PLOT
+##################
+
+# Predict TEST examples
 Yhat_test = model.predict(X_test, verbose=0)
     
 # Plot original and predicted TEST examples
-plot_and_stats(Yhat_test, Y_test, model_dir)
+plot_and_stats(Yhat_test, Y_test, res_dir)

@@ -1,5 +1,6 @@
 # Deep-fUS: functional ultrasound imaging of the brain using deep learning and sparse data
-<img src="rat_brain.png" width="1000">
+
+<img src="rat_brain_img.png" width="1000">
 
 ## Description
 This repository contains the software for reconstruction of power Doppler images from sparse compound ultrasound datasets.
@@ -10,12 +11,15 @@ Training this model on an NVIDIA TITAN RTX GPU took approximately 13 sec per epo
 
 
 ### Datasets
+Datasets for training and validation of this model will be provided with future updates.
 
 ### Training the neural network
-To train the model, execute [src/test_training.py](src/test_training.py). The script calls the function [src/train.py](src/train.py) and assumes that the training and validation examples are in the [datasets/train](datasets/train) and [datasets/dev](datasets/dev) folders, respectively.
+To train the model, execute [src/test_training.py](src/test_training.py). The script calls the function [src/train.py](src/train.py) and assumes that the training and validation examples are in the [data/train](data/train) and [data/dev](data/dev) folders, respectively.
 
 ### Predicting the test set using a pre-trained model
-To predict the fUS images in the test set using one of the pre-trained models in [pretrained_models](pretrained_models), execute [src/predict.py](src/predict.py). This script assumes that the test examples are in the [datasets/test](datasets/test) folder.
+To predict the fUS images in the test set using one of the pre-trained models in [pretrained_models](pretrained_models), execute [src/predict.py](src/predict.py). This script assumes that the test examples are in the [data/test](data/test) folder.
+
+To predict a full set of images using one of the pre-trained models in [pretrained_models](pretrained_models), execute [src/predict_full_set.py](src/predict_full_set.py). This script assumes that the test examples are in the [data/test_full_sets](data/test_full_sets) folder.
 
 ## Software License
 

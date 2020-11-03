@@ -55,7 +55,7 @@ def train(res_dir, n_img=125, learn_rate=5e-6, loss_func='custom', reg_fact=0.5,
     train_log["epochs"] = train_epochs
     train_log["reg_fact"] = reg_fact
     
-    # Create results Directory if doesn't exist
+    # Create results directory if not already existing
     if not os.path.exists(res_dir):
         os.mkdir(res_dir)
         print("Directory " , res_dir ,  " created ")

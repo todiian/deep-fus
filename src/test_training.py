@@ -21,7 +21,11 @@ import os
 from train import *
 
 N_images = 125
+N_epochs = 2
+learning_rate = 5e-6
+loss = 'custom'
+dropout = 0.5
 
-res_dir = '../results/deepfUS5_' +str(N_images)
+res_dir = '../results/trained_deepfUS5_' +str(N_images)
     
-train(res_dir, n_img=N_images, learn_rate=5e-6, loss_func='custom', reg_fact=0.5, train_epochs=100)
+train(res_dir, n_img=N_images, learn_rate=learning_rate, loss_func=loss, reg_fact=dropout, train_epochs=N_epochs)
