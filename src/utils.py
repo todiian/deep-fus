@@ -2,7 +2,7 @@
 File:     deep-fus/src/utils.py
 Author:   Tommaso Di Ianni (todiian@stanford.edu)
 
-Copyright 2020 Tommaso Di Ianni
+Copyright 2021 Tommaso Di Ianni
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,13 +26,12 @@ import random
 import os
 import matplotlib.pyplot as plt
 
-def load_dataset(dataset, n_img=64, m='all'):
+def load_dataset(dataset, n_img, m):
     """
     This function is used to load the training, validation, and test datasets.
     
     Arguments:
-    dataset -- string for dataset. Accept: 'train', 'dev' or 'test'. Require set to be in the 
-               datasets folder
+    dataset -- string for dataset. Accept: 'train', 'dev' or 'test'. Require set to be in the data folder
     n_img -- number of compounded RF images 
     m -- number of sets to load. Select m sets after random permutation
     
@@ -44,40 +43,32 @@ def load_dataset(dataset, n_img=64, m='all'):
     # The network was tested with images of 96x96 pixels. If this parameter is changed, the dimensions of train and dev examples must be changed accordingly
     n_pix = 96
     
-    # Load set list
-    with open('../data/' +dataset +'/datasets_list.txt', 'r') as f:
-        data_list = f.read().splitlines()
-    
-    # Number of available examples
-    m_avail = len(data_list)
-    
-    if m=='all':
-        m = m_avail
-    
     print('Loading ' +str(m) +' ' +dataset +' examples.')
     
     # Initialize output arrays
     set_x = np.zeros((m, n_pix, n_pix, n_img))
     set_y = np.zeros((m, n_pix, n_pix))
     
+    data_list = [i for i in range(m)]
+    
     # Shuffle set list
-    random.Random(4).shuffle(data_list)
+    np.random.seed(1)
+    np.random.shuffle(data_list)
     
-    # Select random subset of m sets from data_list
-    data_list = data_list[:m]
-    
-    for idx, val in enumerate(data_list):
-        
+    for k in range(m):
         # Load dataset
-        data_dir = '../data/' +dataset +'/' +val
+        data_dir = '../data/' +dataset +'/fr' +str(k+1) +'.mat'
         mat_contents = sio.loadmat(data_dir)
         
+        idx = data_list[k]
+                
         set_x[idx] = mat_contents['x'][:,:,:n_img]
         set_y[idx] = mat_contents['y']
     
-    print('Done loading ' +str(m) +' ' +dataset +' examples.')
+    print('    Done loading ' +str(m) +' ' +dataset +' examples.')
     
     return set_x, set_y
+
 
 
 def plot_and_stats(Yhat, Y, model_dir):
@@ -85,13 +76,14 @@ def plot_and_stats(Yhat, Y, model_dir):
     This function is used for plotting the original and predicted frame, and their difference. 
     The function also calculates the following metrics:
     -- NMSE
+    -- nRMSE
     -- SSIM
     -- PSNR
     
     Arguments:
     Yhat -- Predicted examples
     Y -- Original examples (ground truth)
-    model_dir -- path to the folder containing the file 'my_model.h5'
+    model_dir -- Path to the folder containing the file 'my_model.h5'
     
     Returns:
     --
@@ -103,16 +95,63 @@ def plot_and_stats(Yhat, Y, model_dir):
     
     loc_dir = model_dir +'/plot_and_stats'
     if not os.path.exists(loc_dir):
-        os.mkdir(loc_dir)
+        os.makedirs(loc_dir)
     
-    nmse = []
-    ssim = []
-    psnr = []
+    nmse  = []
+    nrmse = []
+    ssim  = []
+    psnr  = []
     
     # Create dict to store metrics
     metrics = {};
     
-    for idx in range(Yhat.shape[0]):
+    for idx in range(np.minimum(Yhat.shape[0],50)):
+        
+        ###################
+        # CALCULATE METRICS
+        ###################
+        
+        # Prep for metric calc
+        y_true = tf.convert_to_tensor(Y[idx])
+        y_pred = tf.convert_to_tensor(Yhat[idx])
+        
+        y_true = tf.image.convert_image_dtype(tf.reshape(y_true,[1,96,96,1]), tf.float32)
+        y_pred = tf.image.convert_image_dtype(tf.reshape(y_pred,[1,96,96,1]), tf.float32)
+        
+        # NMSE
+        nmse_tmp = tf.keras.backend.mean(tf.keras.backend.square(y_pred-y_true))/tf.keras.backend.mean(tf.keras.backend.square(y_true))
+        nmse_tmp = np.float_(nmse_tmp)
+        nmse.append(nmse_tmp)
+        
+        # nRMSE
+        nrmse_tmp = tf.keras.backend.sqrt(tf.keras.backend.mean(tf.keras.backend.square(y_pred-y_true)))/(tf.keras.backend.max(y_true)-tf.keras.backend.min(y_true))
+        nrmse.append(np.float_(nrmse_tmp))
+        
+        # SSIM
+        ssim_tmp = tf.reduce_mean(tf.image.ssim(y_true, y_pred, max_val=1, filter_size=3))
+        ssim_tmp = np.float_(ssim_tmp)
+        ssim.append(ssim_tmp)
+        
+        # Prep for PSNR calc
+        y_pred = tf.divide(y_pred,tf.reduce_max(y_true))    # Normalize y_pred [0 1]        
+        y_pred = tf.clip_by_value(y_pred, np.power(10,-dr/10), 1)         # Clip to dynamic range
+        y_pred = tf.multiply(tf.divide(tf.math.log(y_pred), tf.math.log(tf.constant(10, dtype=y_true.dtype))), 10)   
+        y_pred = (y_pred+dr)/dr
+        
+        y_true = tf.divide(y_true,tf.reduce_max(y_true))    # Normalize y_true [0 1]
+        y_true = tf.clip_by_value(y_true, np.power(10,-dr/10), 1)          # Clip to dynamic range
+        y_true = tf.multiply(tf.divide(tf.math.log(y_true), tf.math.log(tf.constant(10, dtype=y_true.dtype))), 10)
+        y_true = (y_true+dr)/dr
+        
+        # PSNR
+        psnr_tmp = tf.image.psnr(y_true, y_pred, max_val=1)
+        psnr_tmp = np.float_(psnr_tmp)
+        psnr.append(psnr_tmp)
+        
+        ###########################
+        # PLOT ORIG AND PRED FRAMES
+        ###########################
+        
         # Convert Y to dB scale
         Y_dB = 10*np.log10(Y[idx]/np.amax(Y[idx]))
         
@@ -141,12 +180,12 @@ def plot_and_stats(Yhat, Y, model_dir):
         cs = ax.imshow(Yhat_dB, vmin=-dr, vmax=0, cmap='bone')
         cbar = fig.colorbar(cs)
         plt.show()
-        plt.title('Predicted ' +str(idx))
+        plt.title('Pred ' +str(idx) +' - SSIM: ' +'{:.03f}'.format(ssim_tmp) +' - PSNR: ' +'{:.03f}'.format(psnr_tmp) +' - NMSE: ' +'{:.03f}'.format(nmse_tmp) +' - NRMSE: ' +'{:.03f}'.format(nrmse_tmp) )
         plt.savefig(loc_dir +'/pred' +str(idx) +'.png')
         plt.close(fig)
         
         # Plot difference
-        img_diff = Yhat_dB-Y_dB
+        img_diff = np.abs(Yhat_dB-Y_dB)
         fig, ax = plt.subplots()
         cs = ax.imshow(img_diff, cmap='bone')
         cbar = fig.colorbar(cs)
@@ -155,39 +194,30 @@ def plot_and_stats(Yhat, Y, model_dir):
         plt.savefig(loc_dir +'/diff' +str(idx) +'.png')
         plt.close(fig)
         
-        # NMSE
-        nmse_tmp = tf.keras.backend.mean(tf.keras.backend.square(Yhat[idx]-Y[idx]))/tf.keras.backend.mean(tf.keras.backend.square(Y[idx]))
-        nmse.append(nmse_tmp)
+        # Scatter plot
+        y1 = np.copy(Y_dB)
+        y2 = np.copy(Yhat_dB)
+        fig, ax = plt.subplots()
+        plt.scatter(y1.flatten(), y2.flatten(), marker='o', color='black')
+        x = np.linspace(-40, 0, 41)
+        plt.plot(x, x);
+        plt.xlabel('True')
+        plt.ylabel('Pred')
+        plt.show()
+        plt.savefig(loc_dir +'/scatt' +str(idx) +'.png')
+        plt.close(fig)
         
-        # Prep for SSIM calc
-        y_true = tf.convert_to_tensor(Y[idx])
-        y_pred = tf.convert_to_tensor(Yhat[idx])
-        
-        y_true = tf.image.convert_image_dtype(tf.reshape(y_true,[1,96,96,1]), tf.float32)
-        y_pred = tf.image.convert_image_dtype(tf.reshape(y_pred,[1,96,96,1]), tf.float32)
-        
-        # SSIM
-        ssim_tmp = tf.reduce_mean(tf.image.ssim(y_true, y_pred, max_val=1, filter_size=3))
-        ssim.append(np.float_(ssim_tmp))
-        
-        # Prep for PSNR calc
-        y_pred = tf.divide(y_pred,tf.reduce_max(y_true))    # Normalize y_pred [0 1]        
-        y_pred = tf.clip_by_value(y_pred, np.power(10,-dr/10), 1)         # Clip to dynamic range
-        y_pred = tf.multiply(tf.divide(tf.math.log(y_pred), tf.math.log(tf.constant(10, dtype=y_true.dtype))), 10)   
-        y_pred = (y_pred+dr)/dr
-        
-        y_true = tf.divide(y_true,tf.reduce_max(y_true))    # Normalize y_true [0 1]
-        y_true = tf.clip_by_value(y_true, np.power(10,-dr/10), 1)          # Clip to dynamic range
-        y_true = tf.multiply(tf.divide(tf.math.log(y_true), tf.math.log(tf.constant(10, dtype=y_true.dtype))), 10)
-        y_true = (y_true+dr)/dr
-        
-        # PSNR
-        psnr_tmp = tf.image.psnr(y_true, y_pred, max_val=1)
-        psnr.append(np.float_(psnr_tmp))        
+    ######################
+    # SAVE METRICS TO FILE
+    ######################
     
     metrics["nmse"] = list(np.float_(nmse))
     metrics["nmse_mean"] = np.float_(np.mean(nmse))
     metrics["nmse_std"] = np.float_(np.std(nmse))
+    
+    metrics["nrmse"] = list(np.float_(nrmse))
+    metrics["nrmse_mean"] = np.float_(np.mean(nrmse))
+    metrics["nrmse_std"] = np.float_(np.std(nrmse))
     
     metrics["ssim"] = list(np.float_(ssim))
     metrics["ssim_mean"] = np.float_(np.mean(ssim))
@@ -201,3 +231,48 @@ def plot_and_stats(Yhat, Y, model_dir):
         json.dump(metrics, file)
         
     return
+
+
+def load_dataset_postproc(dataset, n_img, m):
+    """
+    This function is used to load the training, validation, and test datasets for the experiment
+    using pre-processed power Doppler images.
+    
+    Arguments:
+    dataset -- string for dataset. Accept: 'train', 'dev' or 'test'. Require set to be in the data folder
+    n_img -- number of compounded RF images 
+    m -- number of sets to load. Select m sets after random permutation
+    
+    Returns:
+    set_x, set_y -- pairs of features (compounded RF) and labels (power Doppler image) for each  
+                    dataset    
+    """
+    
+    # The network was tested with images of 96x96 pixels. If this parameter is changed, the dimensions of train and dev examples must be changed accordingly
+    n_pix = 96
+    
+    print('Loading ' +str(m) +' ' +dataset +' examples.')
+    
+    # Initialize output arrays
+    set_x = np.zeros((m, n_pix, n_pix))
+    set_y = np.zeros((m, n_pix, n_pix))
+    
+    data_list = [i for i in range(m)]
+    
+    # Shuffle set list
+    np.random.seed(1)
+    np.random.shuffle(data_list)
+    
+    for k in range(m):
+        # Load dataset
+        data_dir = '../data/' +dataset +'_process/' +str(n_img) +'img/fr' +str(k+1) +'.mat'
+        mat_contents = sio.loadmat(data_dir)
+        
+        idx = data_list[k]
+                
+        set_x[idx] = mat_contents['x']
+        set_y[idx] = mat_contents['y']
+    
+    print('    Done loading ' +str(m) +' ' +dataset +' examples.')
+    
+    return set_x, set_y
