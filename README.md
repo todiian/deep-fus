@@ -24,7 +24,7 @@ Training, validation, and testing datasets are made of pairs of compound data fr
 Training and validation data should be added to the folders [data/train](data/train) and [data/dev](data/dev). All the scripts in this repository assume that the data is provided in .mat format.
 
 
-## Network training and optimization
+## Network training, optimization, and testing
 
 ### Bayesian hyperparameter search
 In addition to the hyperparameters above, we considered the learning rate and the loss weight λ as hyperparameters. We optimized the network's hyperparameters using the Bayesian optimization routine in Keras Tuner. 
@@ -35,7 +35,7 @@ In the `src` folder, call `python hp_search.py` to execute the [optimization rou
 If you would rather test your own set of hyperparameters, you can call `python train.py` in the `src` folder. Currently, the [training routine](src/train.py) uses the hyperparameters values from our Bayesian optimization. Note that this routine assumes that the training and validation datasets are available in the folders [data/train](data/train) and [data/dev](data/dev).
 
 
-## Reconstructing the test images using a pre-trained model
+### Reconstructing test images using a pre-trained model
 Pre-trained models are available in [pretrained_models](pretrained_models). Use one of these models to reconstruct the power Doppler images in the folder [data/test](data/test).
 
 In the `src` folder, call `python predict.py` to reconstruct the images in the test set. This script plots the images reconstructed by the network (predicted), the reference images (original) reconstructed by the conventional power Doppler processing with the full compound dataset, the absolute difference images, and the scatter plots of the pixel values in the predicted and original images. In addition, the script saves the .mat files and the quantitative metrics (SSIM, PSNR, and NMSE) for each image. The results are saved in the model folder.
