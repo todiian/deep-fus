@@ -1,4 +1,4 @@
-# Deep-fUS: functional ultrasound imaging of the brain using deep learning and sparse data
+# Deep-fUS: A deep learning platform for functional ultrasound imaging of the brain using sparse data
 
 <img src="graphical_abstract.png" width="1000">
 
@@ -6,7 +6,7 @@
 
 This repository contains the software to reconstruct power Doppler images for functional ultrasound using sparse compound datasets.
 
-Functional ultrasound is a rapidly emerging modality that enables whole-brain imaging of neural activity in awake and mobile rodents. To achieve sufficient blood flow sensitivity in the brain microvasculature, fUS relies on long ultrasound data acquisitions at high frame rates, posing high demands on the sampling and processing hardware. We developed an end-to-end image reconstruction approach based on deep learning that significantly reduces the amount of data necessary while retaining the imaging performance. We trained convolutional neural networks to learn the power Doppler reconstruction function from sparse sequences of ultrasound data with a compression factor up to 95%.
+Functional ultrasound (fUS) is a rapidly emerging modality that enables whole-brain imaging of neural activity in awake and mobile rodents. To achieve sufficient blood flow sensitivity in the brain microvasculature, fUS relies on long ultrasound data acquisitions at high frame rates, posing high demands on the sampling and processing hardware. We developed an end-to-end image reconstruction approach based on deep learning that significantly reduces the amount of data necessary while retaining the imaging performance. We trained convolutional neural networks to learn the power Doppler reconstruction function from sparse sequences of ultrasound data with a compression factor of up to 95%.
 
 The code in this repository has been tested with Python 3.7.7 using TensorFlow Keras version 2.1.0.
 
