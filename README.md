@@ -1,6 +1,6 @@
 # Deep-fUS: functional ultrasound imaging of the brain using deep learning and sparse data
 
-<img src="github_fig.png" width="1000">
+<img src="graphical_abstract.png" width="1000">
 
 ## Description
 
@@ -65,15 +65,15 @@ limitations under the License.
 ## Citing this work
 
 ```
-@article {Di Ianni2020.09.29.319368v3,
-author = {Di Ianni, Tommaso and Airan, Raag D.},
-title = {Deep-fUS: functional ultrasound imaging of the brain using deep learning and sparse data},
-year = {2020},
-doi = {10.1101/2020.09.29.319368v3},
-publisher = {Cold Spring Harbor Laboratory},
-URL = {https://www.biorxiv.org/content/10.1101/2020.09.29.319368v3},
-eprint = {https://www.biorxiv.org/content/10.1101/2020.09.29.319368v3.full.pdf},
-journal = {bioRxiv}
-}
+@ARTICLE{9701931,
+  author={Di Ianni, Tommaso and Airan, Raag D.},
+  journal={IEEE Transactions on Medical Imaging}, 
+  title={Deep-fUS: A deep learning platform for functional ultrasound imaging of the brain using sparse data}, 
+  year={2022},
+  volume={},
+  number={},
+  pages={1-1},
+  doi={10.1109/TMI.2022.3148728}
+  }
 ```
 
