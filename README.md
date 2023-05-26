@@ -19,9 +19,11 @@ In [src/models.py](src/models.py) you will also find additional networks that we
 
 
 ## Datasets
-Training, validation, and testing datasets are made of pairs of compound data frames (x) and respective power Doppler images (y). An image size of 96×96 pixels is assumed.
+Training, validation, and testing datasets are made of pairs of compound data frames (x) and respective power Doppler images (y). An image size of 96×96 pixels is assumed. All the scripts in this repository assume that the data are provided in .mat format.
 
-Training and validation data should be added to the folders [data/train](data/train) and [data/dev](data/dev). All the scripts in this repository assume that the data is provided in .mat format.
+You can download a sample test set at the following link: https://drive.google.com/drive/folders/17oa6sy2O0i3Ful7T5zdATkPF4foEa7HC?usp=sharing.
+
+We have not yet made training and validation sets publicly available. If you wish to retrain the models using your own data, training and validation sets should be added to the folders [data/train](data/train) and [data/dev](data/dev). 
 
 
 ## Network training, optimization, and testing
