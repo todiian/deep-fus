@@ -38,7 +38,7 @@ If you would rather test your own set of hyperparameters, you can call `python t
 
 
 ### Reconstructing test images using a pre-trained model
-Pre-trained models are available [here](10.6084/m9.figshare.23663979). You can download the .h5 files and store them in the [pretrained_models](pretrained_models) folder. Use one of these models to reconstruct the power Doppler images stored in [data/test](data/test).
+Pre-trained models are available [here](https://doi.org/10.6084/m9.figshare.23663979.v1). You can download the .h5 files and store them in the [pretrained_models](pretrained_models) folder. Use one of these models to reconstruct the power Doppler images stored in [data/test](data/test).
 
 In the `src` folder, call `python predict.py` to reconstruct the images in the test set. This script plots the images reconstructed by the network (predicted), the reference images (original) reconstructed by the conventional power Doppler processing with the full compound dataset, the absolute difference images, and the scatter plots of the pixel values in the predicted and original images. In addition, the script saves the .mat files and the quantitative metrics (SSIM, PSNR, and NMSE) for each image. The results are saved in the model folder.
 
