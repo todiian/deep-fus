@@ -21,7 +21,7 @@ In [src/models.py](src/models.py) you will also find additional networks that we
 ## Datasets
 Training, validation, and testing datasets are made of pairs of compound data frames (x) and respective power Doppler images (y). An image size of 96×96 pixels is assumed. All the scripts in this repository assume that the data are provided in .mat format.
 
-You can download a sample test set [here](https://drive.google.com/drive/folders/1Mwfe8xrd0S8Y8RHcGhajvET-U_om4Wur?usp=drive_link).
+You can download a sample test set [here](https://drive.google.com/drive/folders/1Mwfe8xrd0S8Y8RHcGhajvET-U_om4Wur?usp=sharing).
 
 We have not yet made training and validation sets publicly available. If you wish to retrain the models using your own data, training and validation sets should be added to the folders [data/train](data/train) and [data/dev](data/dev). 
 
@@ -38,7 +38,7 @@ If you would rather test your own set of hyperparameters, you can call `python t
 
 
 ### Reconstructing test images using a pre-trained model
-Pre-trained models are available in [pretrained_models](pretrained_models). Use one of these models to reconstruct the power Doppler images in the folder [data/test](data/test).
+Pre-trained models are available [here](https://drive.google.com/drive/folders/1kh79gtpszaTYsVudCHcvBk0tGICIDymw?usp=sharing). You can download the .h5 files and store them in the [pretrained_models](pretrained_models) folder. Use one of these models to reconstruct the power Doppler images stored in [data/test](data/test).
 
 In the `src` folder, call `python predict.py` to reconstruct the images in the test set. This script plots the images reconstructed by the network (predicted), the reference images (original) reconstructed by the conventional power Doppler processing with the full compound dataset, the absolute difference images, and the scatter plots of the pixel values in the predicted and original images. In addition, the script saves the .mat files and the quantitative metrics (SSIM, PSNR, and NMSE) for each image. The results are saved in the model folder.
 
@@ -46,7 +46,7 @@ In the `src` folder, call `python predict.py` to reconstruct the images in the t
 ## Final notes
 This repository is a work in progress, and I try my best to keep it up to date with the most recent models that I test. 
 
-Please don't hesitate to [contact me](mailto:todiian@stanford.edu) with suggestions, recommendations, or feedback on this work!
+Please don't hesitate to [contact me](mailto:tommaso.diianni@ucsf.edu) with suggestions, recommendations, or feedback on this work!
 
 
 ## Software License
